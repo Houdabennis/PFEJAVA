@@ -1,0 +1,310 @@
+Index: src/main/java/com/mysql/jdbc/Driver.java
+===================================================================
+diff --git a/src/main/java/com/mysql/jdbc/Driver.java b/src/main/java/com/mysql/jdbc/Driver.java
+deleted file mode 100644
+--- a/src/main/java/com/mysql/jdbc/Driver.java	
++++ /dev/null	
+@@ -1,4 +0,0 @@
+-package com.mysql.jdbc;
+-
+-public class Driver {
+-}
+Index: src/main/java/cigma/pfe/dao/IClientDao.java
+===================================================================
+diff --git a/src/main/java/cigma/pfe/dao/IClientDao.java b/src/main/java/cigma/pfe/dao/IClientDao.java
+deleted file mode 100644
+--- a/src/main/java/cigma/pfe/dao/IClientDao.java	
++++ /dev/null	
+@@ -1,7 +0,0 @@
+-package cigma.pfe.dao;
+-
+-import cigma.pfe.models.Client;
+-
+-public interface IClientDao {
+-    boolean save (Client c);
+-}
+Index: src/main/java/cigma/pfe/dao/ClientDaoImpI.java
+===================================================================
+diff --git a/src/main/java/cigma/pfe/dao/ClientDaoImpI.java b/src/main/java/cigma/pfe/dao/ClientDaoImpI.java
+deleted file mode 100644
+--- a/src/main/java/cigma/pfe/dao/ClientDaoImpI.java	
++++ /dev/null	
+@@ -1,22 +0,0 @@
+-package cigma.pfe.dao;
+-
+-import cigma.pfe.models.Client;
+-
+-import javax.persistence.EntityManager;
+-import javax.persistence.EntityManagerFactory;
+-import javax.persistence.Persistence;
+-
+-public class ClientDaoImpI implements IClientDao {
+-
+-
+-        EntityManagerFactory emf= Persistence.createEntityManagerFactory("unit_clients");
+-        EntityManager em=emf.createEntityManager();
+-        @Override
+-        public boolean save(Client c) {
+-            em.getTransaction().begin();
+-            em.persist(c);
+-            em.getTransaction().commit();
+-            return true;
+-        }
+-         }
+-
+Index: src/main/java/cigma/pfe/models/Client.java
+===================================================================
+diff --git a/src/main/java/cigma/pfe/models/Client.java b/src/main/java/cigma/pfe/models/Client.java
+deleted file mode 100644
+--- a/src/main/java/cigma/pfe/models/Client.java	
++++ /dev/null	
+@@ -1,45 +0,0 @@
+-package cigma.pfe.models;
+-
+-import jdk.nashorn.internal.objects.annotations.Setter;
+-import lombok.AllArgsConstructor;
+-import lombok.Getter;
+-
+-import javax.persistence.Entity;
+-import javax.persistence.Id;
+-import javax.persistence.Table;
+-
+-
+-@Table
+-@Getter
+-@Setter
+-@AllArgsConstructor
+-@Entity(name = "TClients")
+- public class Client {
+-
+-    public long id;
+-    public String nom ;
+-    public Client(long id, String nom) {
+-        this.id = id;
+-        this.nom = nom;
+-    }
+-    public Client() {
+-    }
+-
+-
+-    public void setId(Long id) {
+-        this.id = id;
+-    }
+-
+-    @Id
+-    public Long getId() {
+-        return id;
+-    }
+-        @Override
+-        public String toString() {
+-            return "Client{" +
+-                    "id=" + id +
+-                    ", name='" + nom + '\'' +
+-                    '}';
+-        }
+-    }
+-
+Index: src/main/java/cigma/pfe/services/ClientService.java
+===================================================================
+diff --git a/src/main/java/cigma/pfe/services/ClientService.java b/src/main/java/cigma/pfe/services/ClientService.java
+deleted file mode 100644
+--- a/src/main/java/cigma/pfe/services/ClientService.java	
++++ /dev/null	
+@@ -1,7 +0,0 @@
+-package cigma.pfe.services;
+-
+-import cigma.pfe.models.Client;
+-public interface ClientService {
+-    Client save(Client c);
+-}
+-
+Index: src/main/java/cigma/pfe/services/ClientServiceImpl.java
+===================================================================
+diff --git a/src/main/java/cigma/pfe/services/ClientServiceImpl.java b/src/main/java/cigma/pfe/services/ClientServiceImpl.java
+deleted file mode 100644
+--- a/src/main/java/cigma/pfe/services/ClientServiceImpl.java	
++++ /dev/null	
+@@ -1,12 +0,0 @@
+-package cigma.pfe.services;
+-import cigma.pfe.models.Client;
+-import cigma.pfe.repositories.ClientRepository;
+-import cigma.pfe.repositories.ClientRepositoryImpl;
+-public class ClientServiceImpl implements ClientService{
+-    ClientRepository clientRepository = new ClientRepositoryImpl();
+-    @Override
+-    public Client save(Client c) {
+-        System.out.println("Service Layer : ClientServiceImpl Level... ");
+-        return clientRepository.save(c);
+-    }
+-}
+\ No newline at end of file
+Index: src/main/java/cigma/pfe/repositories/ClientRepositoryImpl.java
+===================================================================
+diff --git a/src/main/java/cigma/pfe/repositories/ClientRepositoryImpl.java b/src/main/java/cigma/pfe/repositories/ClientRepositoryImpl.java
+deleted file mode 100644
+--- a/src/main/java/cigma/pfe/repositories/ClientRepositoryImpl.java	
++++ /dev/null	
+@@ -1,11 +0,0 @@
+-package cigma.pfe.repositories;
+-
+-import cigma.pfe.models.Client;
+-
+-public class ClientRepositoryImpl implements ClientRepository {
+-    @Override
+-    public Client save(Client c) {
+-        System.out.println("DAO Layer : ClientRepositoryImpl Level");
+-        return null;
+-    }
+-}
+Index: src/main/java/cigma/pfe/repositories/ClientRepository.java
+===================================================================
+diff --git a/src/main/java/cigma/pfe/repositories/ClientRepository.java b/src/main/java/cigma/pfe/repositories/ClientRepository.java
+deleted file mode 100644
+--- a/src/main/java/cigma/pfe/repositories/ClientRepository.java	
++++ /dev/null	
+@@ -1,9 +0,0 @@
+-package cigma.pfe.repositories;
+-
+-import cigma.pfe.models.Client;
+-public interface ClientRepository {
+-    Client save(Client c);
+-}
+-
+-
+-
+Index: src/main/java/cigma/pfe/controllers/ClientController.java
+===================================================================
+diff --git a/src/main/java/cigma/pfe/controllers/ClientController.java b/src/main/java/cigma/pfe/controllers/ClientController.java
+deleted file mode 100644
+--- a/src/main/java/cigma/pfe/controllers/ClientController.java	
++++ /dev/null	
+@@ -1,15 +0,0 @@
+-package cigma.pfe.controllers;
+-import cigma.pfe.services.ClientService;
+-import cigma.pfe.models.Client;
+-import cigma.pfe.services.ClientServiceImpl;
+-
+-public class ClientController {
+-
+-    ClientService clientService = new ClientServiceImpl();
+-    public Client save(Client c ){
+-        System.out.println("ClientController level...");
+-        return clientService.save(c);
+-    }
+-
+-
+-}
+Index: src/main/java/cigma/pfe/MonApplication.java
+===================================================================
+diff --git a/src/main/java/cigma/pfe/MonApplication.java b/src/main/java/cigma/pfe/MonApplication.java
+deleted file mode 100644
+--- a/src/main/java/cigma/pfe/MonApplication.java	
++++ /dev/null	
+@@ -1,22 +0,0 @@
+-package cigma.pfe;
+-
+-import cigma.pfe.controllers.ClientController;
+-import cigma.pfe.models.Client;
+-public class MonApplication {
+-  public static void main(String[] args) {
+-        ClientController ctrl1 = new ClientController();
+-       Client client =new Client(1,"malak");
+-      ctrl1.save(client);
+-
+-    }
+-
+-    public static class ApplicationRunner {
+-        public static void main(String[] args) {
+-            ApplicationContext context= new ClassPathXmlApplicationContext("spring.xml");
+-            ClientController ctrl = (ClientController)
+-                    context.getBean("idCtrl");
+-            Client clt = new Client("OMAR");
+-            ctrl.save(clt);
+-        }
+-    }
+-}
+Index: src/main/resources/META-INF/log4j2.properties.properties
+===================================================================
+diff --git a/src/main/resources/META-INF/log4j2.properties.properties b/src/main/resources/META-INF/log4j2.properties.properties
+deleted file mode 100644
+--- a/src/main/resources/META-INF/log4j2.properties.properties	
++++ /dev/null	
+@@ -1,25 +0,0 @@
+-# Set to debug or trace if log4j initialization is failing
+-status = warn
+-# Name of the configuration
+-name = ConsoleLogConfigDemo
+-# Console appender configuration
+-appender.console.type = Console
+-appender.console.name = consoleLogger
+-appender.console.layout.type = PatternLayout
+-appender.console.layout.pattern = %d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L -
+-%m%n
+-# RollingFileAppender will print logs in file which can be rotated based
+-on time or size
+-appender.rolling.type = RollingFile
+-appender.rolling.name = fileLogger
+-appender.rolling.fileName= app.log
+-appender.rolling.filePattern= ${basePath}app_%d{yyyyMMdd}.log.gz
+-appender.rolling.layout.type = PatternLayout
+-appender.rolling.layout.pattern = %d{yyyy-MM-dd HH:mm:ss.SSS} %level [%t]
+-[%c] [%M] [%l] - %msg%n
+-appender.rolling.policies.type = Policies
+-# Root logger level
+-rootLogger.level = debug
+-# Root logger referring to console appender
+-rootLogger.appenderRef.stdout.ref = consoleLogger
+-rootLogger.appenderRef.rolling.ref = fileLogger
+\ No newline at end of file
+Index: src/main/resources/META-INF/persistence.xml
+===================================================================
+diff --git a/src/main/resources/META-INF/persistence.xml b/src/main/resources/META-INF/persistence.xml
+deleted file mode 100644
+--- a/src/main/resources/META-INF/persistence.xml	
++++ /dev/null	
+@@ -1,30 +0,0 @@
+-
+-<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+-             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+-http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+-             version="2.0">
+-<persistence-unit name="unit_clients">
+-    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+-
+-    <properties>
+-
+-        <property name="javax.persistence.jdbc.url"
+-                  value="jdbc:mysql://localhost:3306/pfe_base?createDatabaseIfNotExist=tr
+-ue" />
+-        <property name="javax.persistence.jdbc.user" value="root" />
+-        <property name="javax.persistence.jdbc.password" value="root"
+-        />
+-
+-        <property name="hibernate.show_mysql" value="true"/>
+-        <property name="hibernate.format_mysql" value="true" />
+-        <property name="hibernate.hbm2ddl.auto" value="create" />
+-        <property name="hibernate.dialect"
+-                  value="org.hibernate.dialect.MySQL5Dialect" />
+-
+-    </properties>
+-</persistence-unit>
+-
+-</persistence>
+-
+-
+Index: src/main/resources/spring.xml
+===================================================================
+diff --git a/src/main/resources/spring.xml b/src/main/resources/spring.xml
+deleted file mode 100644
+--- a/src/main/resources/spring.xml	
++++ /dev/null	
+@@ -1,6 +0,0 @@
+-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+-        "https://www.springframework.org/dtd/spring-beans-2.0.dtd">
+-<beans>
+-        <bean id="controller" class="cigma.pfe.contollers.ClientController"
+-              scope="prototype"/>
+-</beans>
+diff --git a/src/test/java/cigma/pfe/models/ClientTest.java b/src/test/java/cigma/pfe/models/ClientTest.java
+deleted file mode 100644
